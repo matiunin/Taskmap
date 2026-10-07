@@ -1,0 +1,351 @@
+/* Сайдбар просмотра задачи — без блока автоматизации */
+.preview-sidebar {
+  width: 400px;
+  min-width: 360px;
+  flex-shrink: 0;
+  background: var(--app-card-bg);
+  border-inline-start: 1px solid var(--app-card-border);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: previewSidebarExpand 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes previewSidebarExpand {
+  from {
+    width: 0;
+    min-width: 0;
+    opacity: 0.8;
+  }
+  to {
+    width: 400px;
+    min-width: 360px;
+    opacity: 1;
+  }
+}
+
+.preview-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 52px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--app-card-border);
+  background: var(--app-panel-bg);
+  flex-shrink: 0;
+}
+
+.preview-sidebar-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--app-text);
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.preview-sidebar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.preview-sidebar-actions .preview-sidebar-refresh,
+.preview-sidebar-actions .preview-open-external,
+.preview-sidebar-actions .preview-sidebar-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--app-text-muted);
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.preview-sidebar-actions .preview-sidebar-refresh i,
+.preview-sidebar-actions .preview-open-external i {
+  font-size: 18px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-sidebar-actions .preview-sidebar-close i {
+  font-size: 18px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-sidebar-refresh {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.preview-sidebar-refresh:hover:not(:disabled) {
+  background: var(--app-card-border);
+  color: var(--app-text);
+}
+
+.preview-sidebar-refresh:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.preview-refresh-icon {
+  font-size: 18px;
+}
+
+.preview-refresh-icon.loading {
+  animation: previewRefreshSpin 0.8s linear infinite;
+}
+
+@keyframes previewRefreshSpin {
+  to { transform: rotate(360deg); }
+}
+
+.preview-open-external {
+  text-decoration: none;
+  background: transparent;
+}
+
+.preview-open-external:hover {
+  background: var(--app-card-border);
+  color: var(--app-text);
+  text-decoration: none;
+}
+
+.preview-sidebar-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.preview-sidebar-close:hover {
+  background: var(--app-card-border);
+  color: var(--app-text);
+}
+
+.preview-sidebar-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.preview-loading,
+.preview-error {
+  padding: 24px;
+  text-align: center;
+  color: var(--app-text-muted);
+}
+
+.preview-error {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.preview-open-link {
+  color: #6C5CE7;
+  text-decoration: none;
+}
+
+.preview-open-link:hover {
+  text-decoration: underline;
+}
+
+.preview-issue-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.preview-issue-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--app-text-muted);
+}
+
+.preview-issue-type i {
+  font-size: 16px;
+}
+
+.preview-issue-key {
+  font-weight: 600;
+  color: var(--app-text);
+}
+
+.preview-issue-priority {
+  margin-inline-start: auto;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--app-card-hover);
+  color: var(--app-text-muted);
+}
+
+.preview-issue-summary {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--app-text);
+  line-height: 1.4;
+}
+
+.preview-issue-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.preview-issue-status {
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--app-card-hover);
+  color: var(--app-text);
+}
+
+.preview-issue-assignee {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--app-text-muted);
+}
+
+.preview-assignee-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.preview-section-title {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--app-text-muted);
+}
+
+.preview-comments-count {
+  margin-inline-start: 6px;
+  font-weight: 500;
+  color: var(--app-text);
+}
+
+.preview-issue-description {
+  margin-bottom: 20px;
+}
+
+.preview-description-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--app-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.preview-issue-comments {
+  margin-top: 16px;
+}
+
+.preview-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.preview-comment {
+  padding: 12px;
+  background: var(--app-card-hover);
+  border-radius: 8px;
+  border: 1px solid var(--app-card-border);
+}
+
+.preview-comment-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.preview-comment-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.preview-comment-author {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--app-text);
+}
+
+.preview-comment-date {
+  margin-inline-start: auto;
+  font-size: 12px;
+  color: var(--app-text-muted);
+}
+
+.preview-comment-body {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--app-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .preview-sidebar {
+    position: fixed;
+    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 1000;
+    border-radius: 0;
+    border-inline-start: none;
+    box-shadow: none;
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-sizing: border-box;
+  }
+
+  @keyframes previewSidebarExpand {
+    from {
+      width: 0;
+      min-width: 0;
+      opacity: 0.8;
+    }
+    to {
+      width: 100%;
+      min-width: 0;
+      opacity: 1;
+    }
+  }
+}

@@ -1,0 +1,273 @@
+.language-selector {
+  padding: 6px 28px 6px 12px;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  background: white;
+  color: #172b4d;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b778c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+}
+
+.language-selector:hover {
+  border-color: #0065ff;
+}
+
+.language-selector:focus {
+  outline: none;
+  border-color: #0065ff;
+  box-shadow: 0 0 0 2px rgba(0, 101, 255, 0.2);
+}
+
+.language-selector.compact {
+  padding: 4px 10px 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 50px;
+  background-image: none;
+}
+
+/* Compact: кнопка + кастомный выпадающий список (клики работают, текст виден) */
+.language-selector-compact-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.language-selector-compact-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  height: 28px;
+  padding: 0 5px 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid #dfe1e6;
+  border-radius: 0.5rem;
+  background: white;
+  color: #172b4d;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.language-selector-compact-trigger:hover {
+  border-color: #0065ff;
+}
+
+.language-selector-compact-trigger:focus {
+  outline: none;
+  border-color: #0065ff;
+  box-shadow: 0 0 0 2px rgba(0, 101, 255, 0.2);
+}
+
+/* flag-icons: горизонтальные флаги (ширина > высота) в кнопке и в списке */
+.language-selector-compact-display.fi {
+  display: inline-block;
+  width: 24px;
+  height: 16px;
+  background-size: cover;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.language-selector-compact-display {
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.language-selector-compact-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin: 4px 0 0;
+  padding: 4px 0;
+  min-width: 100%;
+  list-style: none;
+  border-radius: 6px;
+  border: 1px solid #dfe1e6;
+  background: white;
+  color: #172b4d;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+.language-selector-compact-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.language-selector-compact-option-flag.fi {
+  display: inline-block;
+  width: 22px;
+  height: 15px;
+  background-size: cover;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.language-selector-compact-option:hover {
+  background: #f5f5f7;
+}
+
+.language-selector-compact-option[aria-selected="true"] {
+  background: #e8ecef;
+}
+
+/* Тёмная тема: без бордера, светлый текст */
+@media (prefers-color-scheme: dark) {
+  .language-selector {
+    border: none;
+    background-color: #18181b;
+    color: #e4e4e7;
+  }
+  .language-selector:hover {
+    border: none;
+  }
+  .language-selector:focus {
+    border: none;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+  }
+  .language-selector-compact-trigger {
+    border: none;
+    background-color: #18181b;
+    color: #e4e4e7;
+  }
+  .language-selector-compact-trigger:hover {
+    border: none;
+    background-color: #27272a;
+  }
+  .language-selector-compact-trigger:focus {
+    border: none;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+  }
+  .language-selector-compact-dropdown {
+    border-color: #3f3f46;
+    background: #18181b;
+    color: #e4e4e7;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+  .language-selector-compact-option:hover {
+    background: #27272a;
+  }
+  .language-selector-compact-option[aria-selected="true"] {
+    background: #27272a;
+  }
+}
+
+/* Edge-aware: align dropdown to right edge of trigger */
+.language-selector-compact-dropdown--right {
+  left: auto;
+  right: 0;
+}
+
+/* Bottom sheet (mobile) */
+.language-selector-bs-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: flex;
+  align-items: flex-end;
+  animation: ls-bs-fade-in 0.18s ease;
+}
+
+@keyframes ls-bs-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.language-selector-bs {
+  width: 100%;
+  background: #fff;
+  border-radius: 14px 14px 0 0;
+  padding: 0 0 env(safe-area-inset-bottom, 12px);
+  animation: ls-bs-slide-up 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes ls-bs-slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.language-selector-bs__handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: #d1d5db;
+  margin: 10px auto 6px;
+}
+
+.language-selector-bs__list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 8px;
+}
+
+.language-selector-bs__list .language-selector-compact-option {
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  gap: 12px;
+}
+
+.language-selector-bs__list .language-selector-compact-option-flag.fi {
+  width: 26px;
+  height: 18px;
+}
+
+.language-selector-bs__list .language-selector-compact-option[aria-selected="true"] {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  .language-selector-bs-overlay {
+    background: rgba(0, 0, 0, 0.6);
+  }
+  .language-selector-bs {
+    background: #1c1c1e;
+  }
+  .language-selector-bs__handle {
+    background: #48484a;
+  }
+  .language-selector-bs__list .language-selector-compact-option {
+    color: #e4e4e7;
+  }
+  .language-selector-bs__list .language-selector-compact-option:hover {
+    background: #2c2c2e;
+  }
+  .language-selector-bs__list .language-selector-compact-option[aria-selected="true"] {
+    background: #2c2c2e;
+  }
+}
+
+/* RTL поддержка */
+[dir="rtl"] .language-selector {
+  text-align: right;
+}
+
+[dir="rtl"] .language-selector-compact-trigger {
+  padding: 0 4px 0 5px;
+}
+
+[dir="rtl"] .language-selector-compact-dropdown {
+  left: auto;
+  right: 0;
+}

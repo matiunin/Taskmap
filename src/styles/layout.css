@@ -1,0 +1,128 @@
+.app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Класс для обозначения открытого preview sidebar (используется для стилей) */
+.app.has-preview {
+  /* sidebar теперь внутри main-content, сдвиг не нужен */
+}
+
+/* Шапка для начального экрана конфигурации */
+.app-header {
+  background: linear-gradient(135deg, #6C5CE7 0%, #A29BFE 100%);
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.app-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.app-header p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Мобильная адаптация для начального экрана */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 20px 16px;
+  }
+
+  .app-header h1 {
+    font-size: 24px;
+  }
+
+  .app-header p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 16px 12px;
+  }
+
+  .app-header h1 {
+    font-size: 20px;
+  }
+
+  .app-header p {
+    font-size: 12px;
+  }
+}
+
+/* Основной layout с боковой панелью */
+.main-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  background: var(--app-bg);
+}
+
+/* Правая часть - основной контент */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  background: var(--app-bg);
+}
+
+/* Обёртка для графа и сайдбара превью (flex-row) */
+.main-content-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Область графа — занимает всё доступное пространство */
+.main-content-graph {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .main-layout {
+    flex-direction: column;
+  }
+  
+  /* По умолчанию показываем только TasksDashboard */
+  .main-content {
+    display: none;
+  }
+  
+  .tasks-dashboard {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Когда есть открытые задачи - показываем main-content, скрываем dashboard */
+  .main-layout.has-tasks .main-content {
+    display: flex;
+    flex: 1;
+    width: 100%;
+  }
+  
+  .main-layout.has-tasks .tasks-dashboard {
+    display: none;
+  }
+
+  .app.has-preview .action-bar-overlay,
+  .app.has-preview .action-bar {
+    display: none !important;
+  }
+}

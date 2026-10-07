@@ -1,0 +1,657 @@
+/* ============================================================
+   Features section
+   ============================================================ */
+
+.features-section {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.features-title {
+  text-align: left;
+  color: var(--landing-placeholder);
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 28px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.features-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--landing-line), transparent);
+}
+
+.features-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@container (min-width: 965px) {
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .features-grid .feature-card:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+
+.feature-card {
+  background: var(--landing-card-bg);
+  border: 1px solid var(--landing-card-border-subtle);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.feature-preview {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+  border-left: 1px solid var(--landing-card-border-subtle);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background: var(--landing-mock-bg);
+}
+
+.feature-preview > * {
+  width: 100%;
+  min-width: 0;
+  max-width: 280px;
+  min-height: 100%;
+  margin-inline: auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.feature-content {
+  flex: 0 0 auto;
+  width: 38%;
+  min-width: 200px;
+  padding: 24px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.feature-content .feature-text {
+  text-align: left;
+}
+
+.feature-text {
+  max-width: 280px;
+}
+
+.feature-title {
+  color: var(--landing-heading);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.2px;
+}
+
+.feature-description {
+  color: var(--landing-text-dim);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ============================================================
+   Mock previews: common
+   ============================================================ */
+
+.mock-preview {
+  pointer-events: none;
+  user-select: none;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ============================================================
+   Mock: Graph
+   ============================================================ */
+
+.mock-graph {
+  width: 100%;
+  min-height: 100%;
+  background: var(--landing-mock-bg);
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mock-graph-viewport {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 520 / 380;
+  min-height: 200px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mock-graph-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  overflow: hidden;
+  /* Центрирование графа: визуально смещён влево из-за асимметрии контента во viewBox */
+  transform: translateX(2%);
+}
+
+.mock-graph svg {
+  display: block;
+}
+
+/* Тема для SVG графа (по примеру feature-preview): переменные лендинга */
+.jira-config-wrapper .mock-graph-svg {
+  color: var(--landing-text-dim);
+}
+.jira-config-wrapper .mock-graph-bg-rect { fill: var(--landing-mock-bg); }
+.jira-config-wrapper .mock-graph-panel { fill: var(--landing-mock-panel); }
+.jira-config-wrapper .mock-graph-stroke { stroke: var(--landing-card-border); }
+.jira-config-wrapper .mock-graph-text { fill: var(--landing-text); }
+.jira-config-wrapper .mock-graph-text-muted { fill: var(--landing-text-muted); }
+.jira-config-wrapper .mock-graph-text-dim { fill: var(--landing-text-dim); }
+.jira-config-wrapper .mock-graph-overlay { fill: var(--landing-overlay); }
+
+.mock-bezier {
+  /* без анимации — статичные линии */
+}
+
+.mock-graph-root {
+  /* без анимации */
+}
+
+.jira-config-wrapper .mock-graph-root-filter {
+  filter: url(#rs);
+}
+
+.jira-config-wrapper .mock-graph-card-filter {
+  filter: url(#cs);
+}
+
+@media (prefers-color-scheme: light) {
+  .jira-config-wrapper .mock-graph-root-filter {
+    filter: url(#rsLight);
+  }
+  .jira-config-wrapper .mock-graph-card-filter {
+    filter: url(#csLight);
+  }
+}
+
+/* ============================================================
+   Mock: Drag & Drop
+   ============================================================ */
+
+.mock-dragdrop {
+  width: 100%;
+  padding: 16px 14px;
+  background: var(--landing-mock-bg);
+}
+
+.mock-dd-container {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.mock-dd-group {
+  flex: 1;
+  background: var(--landing-mock-panel);
+  border-radius: 12px;
+  border: 1px solid var(--landing-card-border);
+  overflow: hidden;
+}
+
+.mock-dd-group-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--landing-card-border);
+}
+
+.mock-dd-group-header.subtasks {
+  background: rgba(108, 92, 231, 0.08);
+  color: #a78bfa;
+}
+
+.mock-dd-group-header.links {
+  background: rgba(0, 184, 148, 0.08);
+  color: #34d399;
+}
+
+.mock-dd-count {
+  margin-left: auto;
+  background: var(--landing-overlay);
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.mock-dd-card {
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  border-bottom: 1px solid var(--landing-card-border-subtle);
+  font-size: 12px;
+}
+
+.mock-dd-card:last-child { border-bottom: none; }
+
+.mock-dd-accent {
+  width: 3px;
+  flex-shrink: 0;
+}
+
+.mock-dd-body {
+  flex: 1;
+  padding: 8px 10px;
+  min-width: 0;
+}
+
+.mock-dd-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.mock-dd-key {
+  font-weight: 700;
+  color: #a78bfa;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.mock-dd-badge {
+  font-size: 8px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.mock-dd-badge.done { background: rgba(0, 184, 148, 0.15); color: #34d399; }
+.mock-dd-badge.progress { background: rgba(108, 92, 231, 0.15); color: #a78bfa; }
+.mock-dd-badge.todo { background: var(--landing-overlay); color: var(--landing-text-dim); }
+.mock-dd-badge.blocked { background: rgba(225, 112, 85, 0.15); color: #fb923c; }
+
+.mock-dd-summary {
+  font-size: 10px;
+  color: var(--landing-text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mock-dd-card.ghost {
+  opacity: 0.3;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 3px, var(--landing-overlay) 3px, var(--landing-overlay) 6px);
+}
+
+.mock-dd-card.drop-target {
+  background: linear-gradient(90deg, rgba(0, 184, 148, 0.06) 0%, transparent 100%);
+  animation: mockDropPulse 2s ease-in-out infinite;
+}
+
+@keyframes mockDropPulse {
+  0%, 100% { background: linear-gradient(90deg, rgba(0, 184, 148, 0.03) 0%, transparent 100%); }
+  50% { background: linear-gradient(90deg, rgba(0, 184, 148, 0.1) 0%, rgba(0, 184, 148, 0.02) 100%); }
+}
+
+.mock-dd-arrow-area {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+}
+
+.mock-dd-path { animation: mockDashMove 1.2s linear infinite; }
+.mock-dd-dot { animation: mockDotPulse 1.2s ease-in-out infinite; }
+
+@keyframes mockDashMove {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -16; }
+}
+
+@keyframes mockDotPulse {
+  0%, 100% { r: 3; opacity: 0.3; }
+  50% { r: 5; opacity: 0.6; }
+}
+
+/* ============================================================
+   Mock: Task list
+   ============================================================ */
+
+.mock-tasklist {
+  background: var(--landing-mock-bg);
+}
+
+.mock-tl-tabs-bar {
+  display: flex;
+  gap: 0;
+  background: var(--landing-mock-panel);
+  border-bottom: 1px solid var(--landing-card-border);
+}
+
+.mock-tl-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--landing-placeholder);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: default;
+  font-family: inherit;
+}
+
+.mock-tl-tab.active {
+  color: #a78bfa;
+  border-bottom-color: #6C5CE7;
+}
+
+.mock-tl-tab svg { opacity: 0.4; }
+.mock-tl-tab.active svg { opacity: 1; }
+
+.mock-tl-list { padding: 6px; }
+
+.mock-tl-item {
+  display: flex;
+  align-items: stretch;
+  background: var(--landing-mock-panel);
+  border: 1px solid var(--landing-card-border);
+  border-radius: 10px;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+.mock-tl-item:last-child { margin-bottom: 0; }
+
+.mock-tl-item:nth-child(1) {
+  border-left-color: #6C5CE7;
+  border-left-width: 3px;
+}
+
+.mock-tl-accent {
+  width: 3px;
+  flex-shrink: 0;
+  display: none;
+}
+
+.mock-tl-body {
+  flex: 1;
+  padding: 8px 10px;
+  min-width: 0;
+}
+
+.mock-tl-header-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.mock-tl-type-svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.mock-tl-key {
+  font-size: 12px;
+  font-weight: 700;
+  color: #a78bfa;
+  white-space: nowrap;
+}
+
+.mock-tl-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+  margin-left: auto;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.mock-tl-badge.done { background: rgba(0, 184, 148, 0.12); color: #34d399; }
+.mock-tl-badge.progress { background: rgba(108, 92, 231, 0.12); color: #a78bfa; }
+.mock-tl-badge.blocked { background: rgba(225, 112, 85, 0.12); color: #fb923c; }
+.mock-tl-badge.todo { background: var(--landing-overlay); color: var(--landing-placeholder); }
+
+.mock-tl-summary {
+  font-size: 12px;
+  color: var(--landing-text-muted);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mock-tl-assignee {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.mock-tl-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6C5CE7, #a78bfa);
+  color: white;
+  font-size: 8px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--landing-mock-panel);
+  box-shadow: 0 1px 3px var(--landing-shadow);
+}
+
+/* ============================================================
+   Mock: Batch operations
+   ============================================================ */
+
+.mock-batch {
+  width: 100%;
+  background: var(--landing-mock-bg);
+  padding: 16px 14px;
+}
+
+.mock-batch-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--landing-mock-panel);
+  border: 1px solid var(--landing-card-border);
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.mock-batch-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--landing-text);
+}
+
+.mock-batch-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #a78bfa;
+  animation: mockBatchPulse 2s ease-in-out infinite;
+}
+
+@keyframes mockBatchPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.mock-batch-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.mock-batch-btn {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: default;
+  font-family: inherit;
+}
+
+.mock-batch-btn.cancel {
+  background: var(--landing-btn-disabled-bg);
+  color: var(--landing-text-dim);
+}
+
+.mock-batch-btn.apply {
+  background: var(--landing-btn-ready-bg);
+  color: var(--landing-btn-ready-color);
+}
+
+.mock-batch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mock-batch-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--landing-text);
+  background: var(--landing-mock-panel);
+  border: 1px solid var(--landing-card-border);
+}
+
+.mock-batch-icon {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mock-batch-item.change .mock-batch-icon { background: rgba(108, 92, 231, 0.1); }
+.mock-batch-item.delete .mock-batch-icon { background: rgba(225, 112, 85, 0.1); }
+.mock-batch-item.create .mock-batch-icon { background: rgba(0, 184, 148, 0.1); }
+
+.mock-batch-text {
+  flex: 1;
+  font-size: 11px;
+  color: var(--landing-text-dim);
+  line-height: 1.3;
+}
+
+.mock-batch-text strong {
+  color: #a78bfa;
+  font-weight: 700;
+}
+
+/* Карточка безопасности — третья в features-grid; графика (щит, устройство) */
+.feature-preview:has(.security-benefit-illus) {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.feature-preview .security-benefit-illus {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  min-height: 180px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.security-benefit-svg {
+  width: 100%;
+  height: auto;
+  min-height: 180px;
+  display: block;
+  vertical-align: top;
+}
+
+.jira-config-wrapper .security-device-bg {
+  fill: var(--landing-mock-panel);
+  stroke: var(--landing-card-border);
+  stroke-width: 1;
+}
+
+.jira-config-wrapper .security-device-screen {
+  fill: var(--landing-mock-bg);
+}
+
+.jira-config-wrapper .security-local-badge {
+  fill: rgba(52, 211, 153, 0.12);
+  stroke: rgba(52, 211, 153, 0.35);
+  stroke-width: 1.5;
+}
+
+.jira-config-wrapper .security-dot {
+  fill: #6C5CE7;
+  opacity: 0.5;
+}
+
+.jira-config-wrapper .security-dot-1 { animation: security-dot-pulse 2.5s ease-in-out infinite; }
+.jira-config-wrapper .security-dot-2 { animation: security-dot-pulse 2.5s ease-in-out 0.4s infinite; }
+.jira-config-wrapper .security-dot-3 { animation: security-dot-pulse 2.5s ease-in-out 0.8s infinite; }
+
+@keyframes security-dot-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}

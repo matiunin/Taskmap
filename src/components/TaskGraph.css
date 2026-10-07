@@ -1,0 +1,193 @@
+.task-graph {
+  width: 100%;
+  height: calc(100vh - 100px);
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  touch-action: none; /* Улучшает тач-интерфейс */
+}
+
+/* Мобильная адаптация графа */
+@media (max-width: 768px) {
+  .task-graph {
+    height: calc(100vh - 120px); /* Учитываем мобильный хедер */
+  }
+}
+
+@media (max-width: 480px) {
+  .task-graph {
+    height: calc(100vh - 140px);
+  }
+}
+
+/* Стили для промежуточных узлов групп связей */
+.task-graph .react-flow__node-default {
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #cbd5e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2d3748;
+  text-align: center;
+  min-width: 80px;
+  backdrop-filter: blur(8px);
+}
+
+.task-graph .react-flow__node-default:hover {
+  border-color: #3182ce;
+  box-shadow: 0 6px 16px rgba(49, 130, 206, 0.2);
+}
+
+/* Плавные кривые для связей */
+.task-graph .react-flow__edge-path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Стили для стрелок */
+.task-graph .react-flow__edge .react-flow__edge-path {
+  stroke-dasharray: none;
+  animation: none;
+}
+
+/* Плавные анимации для hover эффектов */
+.task-graph .react-flow__edge:hover .react-flow__edge-path {
+  stroke-width: 4px !important;
+  filter: drop-shadow(0 0 8px rgba(49, 130, 206, 0.3));
+  transition: all 0.2s ease;
+}
+
+/* Стили для лейблов связей */
+.task-graph .react-flow__edge-label {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+}
+
+/* Анимация появления узлов */
+@keyframes nodeAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.task-graph .react-flow__node {
+  animation: nodeAppear 0.5s ease-out;
+}
+
+/* Улучшенные стили для task-card в контексте графа */
+.task-graph .task-card {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.task-graph .task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Элементы управления ReactFlow */
+.task-graph .react-flow__controls {
+  bottom: 20px;
+  left: 20px;
+}
+
+.task-graph .react-flow__controls button {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+  border: 1px solid #e2e8f0 !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #42526e !important;
+  font-size: 16px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(8px) !important;
+  transition: all 0.2s ease !important;
+}
+
+.task-graph .react-flow__controls button:hover {
+  background: rgba(255, 255, 255, 1) !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.task-graph .react-flow__controls button:active {
+  transform: scale(0.95) !important;
+}
+
+.task-graph .react-flow__minimap {
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.task-graph .react-flow__minimap-mask {
+  fill: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Фоновая сетка для лучшей ориентации */
+.task-graph .react-flow__background {
+  background-color: transparent;
+}
+
+.task-graph .react-flow__background-pattern {
+  fill: rgba(0, 0, 0, 0.02);
+  stroke: rgba(0, 0, 0, 0.04);
+}
+
+/* Мобильная адаптация элементов управления */
+@media (max-width: 768px) {
+  .task-graph .react-flow__controls {
+    bottom: 16px;
+    left: 16px;
+  }
+
+  .task-graph .react-flow__controls button {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 18px !important;
+  }
+
+  .task-graph .react-flow__minimap {
+    bottom: 16px;
+    right: 16px;
+    width: 120px !important;
+    height: 80px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .task-graph .react-flow__controls {
+    bottom: 12px;
+    left: 12px;
+  }
+
+  .task-graph .react-flow__controls button {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 20px !important;
+  }
+
+  .task-graph .react-flow__minimap {
+    bottom: 12px;
+    right: 12px;
+    width: 100px !important;
+    height: 70px !important;
+  }
+}
+

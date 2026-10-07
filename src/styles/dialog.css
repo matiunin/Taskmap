@@ -1,0 +1,176 @@
+/* ===== Диалог подтверждения удаления ===== */
+.confirm-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--app-overlay);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.confirm-dialog {
+  background: var(--app-card-bg);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--app-card-border);
+  padding: 24px;
+  max-width: 420px;
+  width: 90%;
+  animation: dialogSlideIn 0.2s ease-out;
+}
+
+@keyframes dialogSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.confirm-dialog h3 {
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--app-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.confirm-dialog h3::before {
+  content: '⚠️';
+  font-size: 24px;
+}
+
+.confirm-dialog p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: var(--app-text-muted);
+  line-height: 1.5;
+}
+
+.confirm-dialog p strong {
+  color: #6C5CE7;
+  font-weight: 600;
+}
+
+.confirm-dialog .warning {
+  background: rgba(253, 203, 110, 0.15);
+  border-left: 4px solid #FDCB6E;
+  padding: 12px 14px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: #b8860b;
+  margin-bottom: 20px;
+}
+
+.confirm-dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.confirm-dialog .cancel-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--app-card-border);
+  background: var(--app-card-bg);
+  color: var(--app-text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.confirm-dialog .cancel-btn:hover {
+  background: var(--app-card-hover);
+  border-color: var(--app-card-border);
+}
+
+.confirm-dialog .delete-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  background: #E17055;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(225, 112, 85, 0.25);
+}
+
+.confirm-dialog .delete-btn:hover {
+  background: #D63031;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(225, 112, 85, 0.35);
+}
+
+.confirm-dialog .delete-btn:active {
+  transform: translateY(0);
+}
+
+/* Мобильная адаптация — bottom sheet */
+@media (max-width: 768px) {
+  .confirm-dialog-overlay {
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .confirm-dialog {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 24px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    border-radius: 16px 16px 0 0;
+    border-bottom: none;
+    animation: bottomSheetSlideIn 0.25s ease-out;
+  }
+
+  @keyframes bottomSheetSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .confirm-dialog h3 {
+    font-size: 18px;
+  }
+
+  .confirm-dialog-buttons {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .confirm-dialog .cancel-btn,
+  .confirm-dialog .delete-btn {
+    width: 100%;
+    padding: 12px;
+  }
+}

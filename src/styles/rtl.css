@@ -1,0 +1,229 @@
+/* ==========================================
+   RTL (Right-to-Left) Support for Arabic
+   ========================================== */
+
+@import './rtl-components.css';
+
+/* Основная поддержка RTL */
+[dir="rtl"] {
+  text-align: right;
+}
+
+/* Форматы текста для арабского */
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  text-align: right;
+}
+
+[dir="rtl"] input::placeholder {
+  text-align: right;
+}
+
+/* --- margin-left: auto → margin-right: auto --- */
+[dir="rtl"] .action-controls {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .task-tags-bar .refresh-button {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .task-tags-in-header {
+  padding: 0 8px 0 0;
+}
+
+[dir="rtl"] .status-badge {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .skeleton-status {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .mind-node-status {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .collapse-indicator {
+  margin-left: 0;
+  margin-right: 4px;
+}
+
+[dir="rtl"] .collapse-indicator .collapse-btn-icon {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .notification-close {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+[dir="rtl"] .confluence-space {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .mock-dd-count,
+[dir="rtl"] .mock-dd-badge,
+[dir="rtl"] .mock-tl-badge {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* --- TasksDashboard: border и collapse-btn --- */
+[dir="rtl"] .tasks-dashboard {
+  border-right: none;
+  border-left: 1px solid #E8ECEF;
+}
+
+[dir="rtl"] .collapse-btn {
+  right: auto;
+  left: -12px;
+}
+
+[dir="rtl"] .collapse-btn .collapse-btn-icon {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .tasks-dashboard.collapsed .collapse-btn {
+  right: auto;
+  left: -12px;
+}
+
+/* --- Task item: border accent слева → справа --- */
+[dir="rtl"] .task-item {
+  text-align: right;
+}
+[dir="rtl"] .task-item--bug { border-left: 1px solid var(--app-card-border); border-right: 1px solid #E17055; }
+[dir="rtl"] .task-item--epic { border-left: 1px solid var(--app-card-border); border-right: 1px solid #6C5CE7; }
+[dir="rtl"] .task-item--story { border-left: 1px solid var(--app-card-border); border-right: 1px solid #00B894; }
+[dir="rtl"] .task-item--subtask { border-left: 1px solid var(--app-card-border); border-right: 1px solid #74B9FF; }
+[dir="rtl"] .task-item--task { border-left: 1px solid var(--app-card-border); border-right: 1px solid #6C5CE7; }
+
+[dir="rtl"] .task-item:hover {
+  border-right-width: 3px;
+}
+
+/* --- History dropdown --- */
+[dir="rtl"] .history-item {
+  text-align: right;
+}
+
+/* --- Notifications: позиция и анимация --- */
+[dir="rtl"] .notifications-container {
+  right: auto;
+  left: 20px;
+}
+
+[dir="rtl"] .notification-toast {
+  transform: translateX(-20px);
+}
+
+[dir="rtl"] .notification-toast.visible {
+  transform: translateX(0);
+}
+
+[dir="rtl"] .notification-toast.leaving {
+  transform: translateX(-20px);
+}
+
+/* --- Notification progress bar --- */
+[dir="rtl"] .notification-progress {
+  left: auto;
+  right: 0;
+  border-radius: 0 0 6px 0;
+}
+
+/* --- Profile editor --- */
+[dir="rtl"] .password-input-wrapper input {
+  padding-right: 14px;
+  padding-left: 44px;
+}
+
+[dir="rtl"] .password-toggle-btn {
+  right: auto;
+  left: 10px;
+}
+
+/* --- Confirm dialog warning border --- */
+[dir="rtl"] .confirm-dialog .warning {
+  border-left: none;
+  border-right: 4px solid #FDCB6E;
+  border-radius: 8px 0 0 8px;
+}
+
+/* --- Error help list padding --- */
+[dir="rtl"] .error-help ul {
+  padding-left: 0;
+  padding-right: 20px;
+}
+
+/* --- Инвертируем иконки стрелок --- */
+[dir="rtl"] .direction-arrow {
+  transform: scaleX(-1);
+}
+
+/* --- Task tag padding: асимметрия → зеркало --- */
+[dir="rtl"] .task-tag {
+  padding: 6px 10px 6px 5px;
+}
+
+/* --- Warning header toggle --- */
+[dir="rtl"] .warning-header-toggle {
+  text-align: right;
+}
+
+/* --- Элементы с явным text-align: left → right --- */
+[dir="rtl"] .action-dropdown-menu button,
+[dir="rtl"] .add-link-existing-item {
+  text-align: right;
+}
+
+/* --- LanguageSelector: padding и arrow position --- */
+[dir="rtl"] .language-selector {
+  padding: 6px 12px 6px 28px;
+  background-position: left 8px center;
+}
+
+/* --- RelatedItems: border accent --- */
+[dir="rtl"] .related-section {
+  border-left: none;
+  border-right: 4px solid #6b778c;
+}
+
+[dir="rtl"] .parent-section {
+  border-right-color: #6554c0;
+}
+
+[dir="rtl"] .subtasks-section {
+  border-right-color: #36b37e;
+}
+
+[dir="rtl"] .links-section {
+  border-right-color: #0052cc;
+}
+
+[dir="rtl"] .confluence-section {
+  border-right-color: #ff991f;
+}
+
+[dir="rtl"] .section-count {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .issue-status {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .link-type-badge {
+  right: auto;
+  left: 8px;
+}

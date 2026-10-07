@@ -1,0 +1,135 @@
+/* RTL overrides for MindMap, Landing, JiraConfig, and Preview components */
+
+/* --- MindMap nodes: border accent --- */
+[dir="rtl"] .mind-node {
+  border-left: 1px solid var(--fm-border);
+  border-right: 4px solid var(--fm-accent-blue);
+}
+
+[dir="rtl"] .mind-node.root-node {
+  border-left-width: 1px;
+  border-right-width: 5px;
+  border-right-color: var(--fm-accent-purple);
+}
+
+[dir="rtl"] .mind-node.parent-node {
+  border-right-color: var(--fm-accent-purple-light);
+}
+
+[dir="rtl"] .mind-node.subtask-node {
+  border-right-color: var(--fm-accent-green);
+}
+
+[dir="rtl"] .mind-node.link-node {
+  border-right-color: var(--fm-accent-blue);
+}
+
+[dir="rtl"] .mind-node-type-btn {
+  margin-left: 0;
+  margin-right: 4px;
+}
+
+[dir="rtl"] .mind-confluence-node {
+  border-left: 1px solid var(--fm-border);
+  border-right: 3px solid var(--fm-text-muted);
+}
+
+/* --- Mind map не требует RTL - это визуальный граф --- */
+[dir="rtl"] .mindmap-container {
+  direction: ltr;
+}
+
+/* Но панели в mind map должны быть RTL */
+[dir="rtl"] .action-bar,
+[dir="rtl"] .apply-bar {
+  direction: rtl;
+}
+
+/* --- Mock TL item border accent --- */
+[dir="rtl"] .mock-tl-item:nth-child(1) {
+  border-left-color: #232323;
+  border-left-width: 1px;
+  border-right-color: #6C5CE7;
+  border-right-width: 3px;
+}
+
+/* --- Feature preview border --- */
+[dir="rtl"] .feature-preview {
+  border-left: none;
+  border-right: 1px solid #1e1e1e;
+}
+
+/* --- Landing layout padding --- */
+[dir="rtl"] .landing-layout {
+  padding: 0 48px 0 0;
+}
+
+/* --- Верхний отступ левой колонки в RTL (арабский и др.) --- */
+[dir="rtl"] .landing-left {
+  padding-top: 56px;
+}
+
+/* --- Landing text alignment --- */
+[dir="rtl"] .hero-header {
+  text-align: right;
+}
+
+[dir="rtl"] .hero-description {
+  text-align: right;
+}
+
+[dir="rtl"] .features-title {
+  text-align: right;
+}
+
+/* --- Карточки фич: выключка по правому краю в RTL --- */
+[dir="rtl"] .feature-content,
+[dir="rtl"] .feature-content .feature-text,
+[dir="rtl"] .feature-title,
+[dir="rtl"] .feature-description {
+  text-align: right;
+}
+
+/* --- Language picker dropdown arrow → left side --- */
+[dir="rtl"] .language-picker .language-selector {
+  padding: 8px 12px 8px 24px;
+  background-position: left 4px center;
+}
+
+/* --- JiraConfig: password input на лендинге --- */
+[dir="rtl"] .hero-form .password-input-wrapper input {
+  padding-right: 16px;
+  padding-left: 48px;
+}
+
+[dir="rtl"] .hero-form .password-toggle-btn {
+  right: auto;
+  left: 12px;
+}
+
+/* --- Mock previews в feature cards — визуальные, не RTL --- */
+[dir="rtl"] .mock-preview {
+  direction: ltr;
+}
+
+/* --- Features title: ::after line direction --- */
+[dir="rtl"] .features-title::after {
+  background: linear-gradient(to left, #232323, transparent);
+}
+
+/* --- JiraPreviewSidebar --- */
+[dir="rtl"] .preview-sidebar {
+  border-left: none;
+  border-right: 1px solid #E8ECEF;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.04);
+}
+
+[dir="rtl"] .preview-issue-priority {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .preview-comments-count {
+  margin-left: 0;
+  margin-right: 6px;
+}

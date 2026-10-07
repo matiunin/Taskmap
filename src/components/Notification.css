@@ -1,0 +1,139 @@
+.notifications-container {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  max-width: 320px;
+}
+
+@media (max-width: 768px) {
+  .notifications-container {
+    top: 60px;
+    left: 10px;
+    right: 10px;
+    max-width: none;
+  }
+}
+
+.notification-toast {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--app-card-bg);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--app-text);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--app-card-border);
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.notification-toast.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.notification-toast.leaving {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.notification-icon {
+  font-size: 14px;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.notification-toast.success .notification-icon {
+  background: #00B894;
+  color: #fff;
+}
+
+.notification-toast.error .notification-icon {
+  background: #E17055;
+  color: #fff;
+}
+
+.notification-toast.info .notification-icon {
+  background: #6C5CE7;
+  color: #fff;
+}
+
+.notification-toast.warning .notification-icon {
+  background: #FDCB6E;
+  color: #2D3436;
+}
+
+.notification-message {
+  color: var(--app-text-muted);
+  flex: 1;
+}
+
+/* Persistent notifications (errors) */
+.notification-toast.persistent {
+  cursor: pointer;
+}
+
+.notification-toast.persistent:hover {
+  background: var(--app-card-hover);
+  border-color: #E17055;
+}
+
+.notification-close {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--app-text-dim);
+  margin-left: 8px;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.notification-toast.persistent:hover .notification-close {
+  opacity: 1;
+  color: #E17055;
+}
+
+/* Progress bar - полоска таймера */
+.notification-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 0 6px;
+  transition: width 0.05s linear;
+}
+
+.notification-toast.success .notification-progress {
+  background: #00B894;
+}
+
+.notification-toast.error .notification-progress {
+  background: #E17055;
+}
+
+.notification-toast.info .notification-progress {
+  background: #6C5CE7;
+}
+
+.notification-toast.warning .notification-progress {
+  background: #FDCB6E;
+}

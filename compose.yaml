@@ -1,0 +1,13 @@
+services:
+  taskmap:
+    build: .
+    ports:
+      - "127.0.0.1:8080:80"
+    env_file:
+      - .env
+    dns_opt:
+      - "timeout:2"
+      - "attempts:2"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true

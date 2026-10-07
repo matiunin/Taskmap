@@ -1,0 +1,303 @@
+.related-items {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.related-items-empty {
+  background: #f4f5f7;
+  color: #42526e;
+  padding: 40px;
+  margin: 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* Section Styles */
+.related-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #6b778c;
+}
+
+.parent-section {
+  border-left-color: #6554c0;
+  background: linear-gradient(135deg, #f8f7ff 0%, #fff 100%);
+}
+
+.subtasks-section {
+  border-left-color: #36b37e;
+  background: linear-gradient(135deg, #f0fff4 0%, #fff 100%);
+}
+
+.links-section {
+  border-left-color: #0052cc;
+  background: linear-gradient(135deg, #f0f7ff 0%, #fff 100%);
+}
+
+.confluence-section {
+  border-left-color: #ff991f;
+  background: linear-gradient(135deg, #fffbf0 0%, #fff 100%);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #172b4d;
+}
+
+.section-icon {
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-icon .lni {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-count {
+  background: #dfe1e6;
+  color: #42526e;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: auto;
+}
+
+.parent-section .section-count {
+  background: #ede7f6;
+  color: #6554c0;
+}
+
+.subtasks-section .section-count {
+  background: #e3fcef;
+  color: #006644;
+}
+
+.links-section .section-count {
+  background: #deebff;
+  color: #0052cc;
+}
+
+.confluence-section .section-count {
+  background: #fff3cd;
+  color: #856404;
+}
+
+/* Cards Grid */
+.section-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+/* Issue Card */
+.issue-card {
+  background: #fff;
+  border: 1px solid #dfe1e6;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.issue-card:hover {
+  border-color: #0052cc;
+  box-shadow: 0 4px 12px rgba(0, 82, 204, 0.15);
+  transform: translateY(-2px);
+}
+
+.issue-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.issue-type-icon {
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.issue-type-icon .lni {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.issue-key {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0052cc;
+}
+
+.issue-status {
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  margin-left: auto;
+}
+
+.issue-card-body {
+  margin-bottom: 8px;
+}
+
+.issue-summary {
+  font-size: 14px;
+  color: #172b4d;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.issue-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid #f4f5f7;
+}
+
+.assignee-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.assignee-name {
+  font-size: 12px;
+  color: #6b778c;
+}
+
+.link-type-badge {
+  position: absolute;
+  top: -8px;
+  right: 8px;
+  background: #0052cc;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* Confluence Card */
+.confluence-card {
+  background: #fff;
+  border: 1px solid #dfe1e6;
+  border-radius: 8px;
+  padding: 12px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: block;
+}
+
+.confluence-card:hover {
+  border-color: #ff991f;
+  box-shadow: 0 4px 12px rgba(255, 153, 31, 0.15);
+  transform: translateY(-2px);
+}
+
+.confluence-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.confluence-icon {
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confluence-icon .lni {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confluence-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  background: #ff991f;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.confluence-card-body {
+  margin-bottom: 8px;
+}
+
+.confluence-card .confluence-title {
+  font-size: 14px;
+  color: #172b4d;
+  font-weight: 500;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.confluence-card-footer {
+  padding-top: 8px;
+  border-top: 1px solid #f4f5f7;
+}
+
+.confluence-space {
+  font-size: 12px;
+  color: #6b778c;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.confluence-space .lni {
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .related-items {
+    padding: 12px;
+    gap: 16px;
+  }
+  
+  .related-section {
+    padding: 16px;
+  }
+  
+  .section-cards {
+    grid-template-columns: 1fr;
+  }
+}

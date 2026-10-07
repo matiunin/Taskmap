@@ -1,0 +1,63 @@
+/**
+ * Минимальный набор флагов только для языков с переводами:
+ * en (gb), ru, zh (cn), ar (sa), es
+ * Источник: flag-icons (https://flagicons.lipis.dev/)
+ */
+.fib,
+.fi {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+.fi {
+  position: relative;
+  display: inline-block;
+  width: 1.333333em;
+  line-height: 1em;
+}
+.fi:before {
+  content: " ";
+}
+.fi.fis {
+  width: 1em;
+}
+
+/* gb - English */
+.fi-gb {
+  background-image: url(../../node_modules/flag-icons/flags/4x3/gb.svg);
+}
+.fi-gb.fis {
+  background-image: url(../../node_modules/flag-icons/flags/1x1/gb.svg);
+}
+
+/* ru - Russian */
+.fi-ru {
+  background-image: url(../../node_modules/flag-icons/flags/4x3/ru.svg);
+}
+.fi-ru.fis {
+  background-image: url(../../node_modules/flag-icons/flags/1x1/ru.svg);
+}
+
+/* cn - Chinese */
+.fi-cn {
+  background-image: url(../../node_modules/flag-icons/flags/4x3/cn.svg);
+}
+.fi-cn.fis {
+  background-image: url(../../node_modules/flag-icons/flags/1x1/cn.svg);
+}
+
+/* sa - Arabic */
+.fi-sa {
+  background-image: url(../../node_modules/flag-icons/flags/4x3/sa.svg);
+}
+.fi-sa.fis {
+  background-image: url(../../node_modules/flag-icons/flags/1x1/sa.svg);
+}
+
+/* es - Spanish */
+.fi-es {
+  background-image: url(../../node_modules/flag-icons/flags/4x3/es.svg);
+}
+.fi-es.fis {
+  background-image: url(../../node_modules/flag-icons/flags/1x1/es.svg);
+}
