@@ -234,9 +234,13 @@ export const SecurityBenefitIllustration = () => {
         />
         <path d="M152 98 L158 104 L168 92" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </g>
-      {/* Подпись «локально» */}
-      <rect x="120" y="148" width="80" height="28" rx="14" className="security-local-badge" />
-      <text x="160" y="166" textAnchor="middle" fontSize="13" fontWeight="700" fill="#34d399" fontFamily="Inter, system-ui">{t('onboarding.securityLocal')}</text>
+      {/* Переведённая подпись переносится внутри границ устройства. */}
+      <rect x="80" y="148" width="160" height="44" rx="14" className="security-local-badge" />
+      <foreignObject x="80" y="148" width="160" height="44">
+        <div className="security-local-caption">
+          <span dir="auto">{t('onboarding.securityLocal')}</span>
+        </div>
+      </foreignObject>
       {/* Декоративные точки — данные остаются */}
       <circle cx="60" cy="100" r="6" className="security-dot security-dot-1" />
       <circle cx="260" cy="85" r="5" className="security-dot security-dot-2" />
