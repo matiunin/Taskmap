@@ -5,9 +5,15 @@ services:
       - "127.0.0.1:8080:80"
     env_file:
       - .env
+    environment:
+      TASKMAP_DONATION_DATA_DIR: /var/lib/taskmap/donations
+    volumes:
+      - donations:/var/lib/taskmap/donations
     dns_opt:
       - "timeout:2"
       - "attempts:2"
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
+volumes:
+  donations:

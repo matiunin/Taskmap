@@ -329,4 +329,23 @@ export const es: Translations = {
   'onboarding.demoLabel': 'Ilustración con tareas ficticias',
   'profile.invalidEmail': 'Introduce una dirección de correo válida',
   'profile.disconnect': 'Desconectar Jira y borrar esta sesión',
+
+  // === Voluntary one-time support ===
+  'donation.supportAuthor': 'Apoyar al autor',
+  'donation.title': 'Apoyar el desarrollo de Taskmap',
+  'donation.description': 'Un pago único y voluntario. El apoyo no afecta al acceso a las funciones de Taskmap.',
+  'donation.oneTime': 'Pago único',
+  'donation.chooseAmount': 'Elige un importe de apoyo',
+  'donation.select': 'Elegir',
+  'donation.preparing': 'Preparando la página de pago…',
+  'donation.proceedToPayment': 'Ir al pago',
+  'donation.opensNewTab': 'La página de pago se abrirá en una pestaña nueva.',
+  'donation.error': 'No se pudo preparar la página de pago. Inténtalo de nuevo más tarde.',
+  'donation.retry': 'Intentar de nuevo',
+  'donation.smallTitle': 'Un agradecimiento',
+  'donation.mediumTitle': 'Apoyar el desarrollo',
+  'donation.largeTitle': 'Apoyo extra',
+  'donation.selected': 'Seleccionado',
+  'donation.testMode': 'Modo de pago de prueba.',
+  'donation.notNow': 'Ahora no',
 };

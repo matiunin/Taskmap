@@ -14,3 +14,5 @@ export const JIRA_PROXY_URL = configuredProxy
   || (IS_DEV ? '/api/jira-proxy' : '/api/jira-proxy.php');
 
 export const JIRA_MEDIA_URL = IS_DEV ? '/api/jira-media' : '/api/jira-media.php';
+
+export const DONATIONS_URL = IS_DEV ? '/api/donations' : '/api/donations.php';

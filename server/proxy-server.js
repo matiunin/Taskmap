@@ -2,6 +2,7 @@ import http from 'node:http';
 import https from 'node:https';
 import dns from 'node:dns/promises';
 import { pathToFileURL } from 'node:url';
+import { readDonationConfig, publicDonationConfig, createDonation, acceptDonationResult, DONATION_BODY_LIMIT } from './donations.js';
 import { MAX_BODY_BYTES, MAX_RESPONSE_BYTES, UPSTREAM_TIMEOUT_MS, ProxyError,
   readConfig, validateBrowserRequest, validateEnvelope, validateAddresses, formatUpstreamResponse, formatMediaResponse } from './proxy-policy.js';
 
@@ -53,23 +54,30 @@ export function sendUpstream(request, address) {
   });
 }
 
-async function readJson(request) {
-  if (!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(request.headers['content-type'] || '')) {
-    throw new ProxyError(415, 'Content-Type must be application/json.');
-  }
+async function readLimitedBody(request, maximum = MAX_BODY_BYTES) {
   if (request.headers['content-encoding'] && request.headers['content-encoding'] !== 'identity') throw new ProxyError(415, 'Compressed bodies are not supported.');
-  if (Number(request.headers['content-length']) > MAX_BODY_BYTES) throw new ProxyError(413, 'Request body is too large.');
+  if (Number(request.headers['content-length']) > maximum) throw new ProxyError(413, 'Request body is too large.');
   const chunks = [];
   let bytes = 0;
   for await (const chunk of request) {
     bytes += chunk.length;
-    if (bytes > MAX_BODY_BYTES) throw new ProxyError(413, 'Request body is too large.');
+    if (bytes > maximum) throw new ProxyError(413, 'Request body is too large.');
     chunks.push(chunk);
   }
-  try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch { throw new ProxyError(400, 'Invalid JSON.'); }
+  try { return new TextDecoder('utf-8', { fatal: true }).decode(Buffer.concat(chunks)); }
+  catch { throw new ProxyError(400, 'Invalid request encoding.'); }
 }
 
-export function createProxyServer({ config = readConfig(), resolveHost = resolvePublicHost, upstreamRequest = sendUpstream } = {}) {
+async function readJson(request, maximum = MAX_BODY_BYTES) {
+  if (!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(request.headers['content-type'] || '')) {
+    throw new ProxyError(415, 'Content-Type must be application/json.');
+  }
+  const raw = await readLimitedBody(request, maximum);
+  try { return JSON.parse(raw); } catch { throw new ProxyError(400, 'Invalid JSON.'); }
+}
+
+export function createProxyServer({ config = readConfig(), resolveHost = resolvePublicHost, upstreamRequest = sendUpstream,
+  donationConfig = readDonationConfig() } = {}) {
   const server = http.createServer(async (request, response) => {
     response.setHeader('Content-Type', 'application/json; charset=utf-8');
     response.setHeader('Cache-Control', 'no-store');
@@ -78,6 +86,27 @@ export function createProxyServer({ config = readConfig(), resolveHost = resolve
     const finish = (status, body) => { response.statusCode = status; response.end(body); };
     try {
       const path = (request.url || '').split('?')[0];
+      if (['/api/donations', '/api/donations.php'].includes(path)) {
+        validateBrowserRequest(request.headers, config, request.socket.encrypted);
+        if (request.method === 'GET') return finish(200, JSON.stringify(publicDonationConfig(donationConfig)));
+        if (request.method !== 'POST') {
+          response.setHeader('Allow', 'GET, POST');
+          throw new ProxyError(405, 'Only GET and POST are supported.');
+        }
+        return finish(200, JSON.stringify(await createDonation(await readJson(request, DONATION_BODY_LIMIT), donationConfig)));
+      }
+      if (['/api/donation-result', '/api/donation-result.php'].includes(path)) {
+        if (request.method !== 'POST') {
+          response.setHeader('Allow', 'POST');
+          throw new ProxyError(405, 'Only POST is supported.');
+        }
+        if (!/^application\/x-www-form-urlencoded(?:\s*;\s*charset=utf-8)?$/i.test(request.headers['content-type'] || '')) {
+          throw new ProxyError(415, 'Content-Type must be application/x-www-form-urlencoded.');
+        }
+        const acknowledgment = await acceptDonationResult(await readLimitedBody(request, DONATION_BODY_LIMIT), donationConfig);
+        response.setHeader('Content-Type', 'text/plain; charset=utf-8');
+        return finish(200, acknowledgment);
+      }
       if (request.method === 'GET' && ['/api/health', '/test', '/api/jira-proxy', '/api/jira-proxy.php'].includes(path)) {
         return finish(200, JSON.stringify({ status: 'OK', jiraConfigured: config.hosts.size > 0 }));
       }
@@ -103,7 +132,7 @@ export function createProxyServer({ config = readConfig(), resolveHost = resolve
       return finish(result.status, envelope.method === 'HEAD' ? '' : formatUpstreamResponse(result.status, result.body.toString(), envelope.secrets));
     } catch (error) {
       const known = error instanceof ProxyError;
-      finish(known ? error.status : 502, JSON.stringify({ error: known ? error.message : 'Jira request failed.', fromProxy: true }));
+      finish(known ? error.status : 502, JSON.stringify({ error: known ? error.message : 'Request failed.', fromProxy: true }));
     }
   });
   server.headersTimeout = 10000;

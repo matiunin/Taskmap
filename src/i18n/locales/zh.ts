@@ -329,4 +329,23 @@ export const zh: Translations = {
   'onboarding.demoLabel': '使用虚构任务的示意图',
   'profile.invalidEmail': '请输入有效的电子邮件地址',
   'profile.disconnect': '断开 Jira 并清除此会话',
+
+  // === Voluntary one-time support ===
+  'donation.supportAuthor': '支持作者',
+  'donation.title': '支持 Taskmap 开发',
+  'donation.description': '自愿的一次性付款。是否支持不会影响您使用 Taskmap 的功能。',
+  'donation.oneTime': '一次性付款',
+  'donation.chooseAmount': '选择支持金额',
+  'donation.select': '选择',
+  'donation.preparing': '正在准备付款页面…',
+  'donation.proceedToPayment': '前往付款',
+  'donation.opensNewTab': '付款页面将在新标签页中打开。',
+  'donation.error': '无法准备付款页面。请稍后重试。',
+  'donation.retry': '重试',
+  'donation.smallTitle': '表达感谢',
+  'donation.mediumTitle': '支持开发',
+  'donation.largeTitle': '更多支持',
+  'donation.selected': '已选择',
+  'donation.testMode': '测试付款模式。',
+  'donation.notNow': '暂时跳过',
 };

@@ -329,4 +329,23 @@ export const ar: Translations = {
   'onboarding.demoLabel': 'رسم توضيحي بمهام خيالية',
   'profile.invalidEmail': 'أدخل عنوان بريد إلكتروني صالحاً',
   'profile.disconnect': 'قطع الاتصال بـ Jira ومسح هذه الجلسة',
+
+  // === Voluntary one-time support ===
+  'donation.supportAuthor': 'دعم المطوّر',
+  'donation.title': 'دعم تطوير Taskmap',
+  'donation.description': 'دفعة اختيارية لمرة واحدة. لا يؤثر الدعم على إتاحة ميزات Taskmap.',
+  'donation.oneTime': 'دفعة لمرة واحدة',
+  'donation.chooseAmount': 'اختر مبلغ الدعم',
+  'donation.select': 'اختيار',
+  'donation.preparing': 'جارٍ تجهيز صفحة الدفع…',
+  'donation.proceedToPayment': 'الانتقال إلى الدفع',
+  'donation.opensNewTab': 'ستُفتح صفحة الدفع في علامة تبويب جديدة.',
+  'donation.error': 'تعذّر تجهيز صفحة الدفع. حاول مرة أخرى لاحقاً.',
+  'donation.retry': 'حاول مرة أخرى',
+  'donation.smallTitle': 'كلمة شكر',
+  'donation.mediumTitle': 'دعم التطوير',
+  'donation.largeTitle': 'دعم إضافي',
+  'donation.selected': 'تم الاختيار',
+  'donation.testMode': 'وضع الدفع التجريبي.',
+  'donation.notNow': 'ليس الآن',
 };

@@ -5,6 +5,7 @@ import { LanguageSelector } from '../LanguageSelector';
 import { normalizeJiraUrl } from '../../utils/jiraUrlUtils';
 import { MockGraphPreview, MockBatchPreview, SecurityBenefitIllustration } from '../JiraConfig/MockPreviews';
 import { secureSessionStorage } from '../../utils/secureStorage';
+import { SupportAuthor } from '../SupportAuthor';
 import './landing-v2.css';
 
 interface LandingV2Props {
@@ -345,6 +346,7 @@ export const LandingV2: React.FC<LandingV2Props> = ({ onConfigSave, initialConfi
       )}
 
       <footer className="landing-v2__footer">
+        <SupportAuthor placement="footer" />
         <a href="https://lineicons.com" target="_blank" rel="noopener noreferrer">{t('footer.iconsByLineicons')}</a>
       </footer>
     </div>

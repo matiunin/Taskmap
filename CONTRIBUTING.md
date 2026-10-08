@@ -7,6 +7,11 @@ Before proposing a change, run `npm run check` and `npm audit`. Test Jira
 changes in a dedicated test project; queued writes modify the connected
 Jira when applied. Keep examples and fixtures synthetic.
 
+Donation tests must use synthetic merchant credentials and local callbacks.
+Do not submit real payments from automated checks. Changes to the payment
+flow should verify signatures, fixed amounts and repeated notifications,
+while keeping all application features available without a donation.
+
 Never commit `.env`, access tokens, deployment account settings, user data,
 internal screenshots or private URLs. Keep browser `VITE_*` settings public.
 Do not add credentials or response bodies to logs. A security fix should

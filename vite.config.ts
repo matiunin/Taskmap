@@ -14,7 +14,18 @@ export default defineConfig(({ mode }) => {
       host: env.DEV_HOST || '127.0.0.1',
       port: 3000,
       allowedHosts: (env.DEV_ALLOWED_HOSTS || '').split(',').map((host) => host.trim()).filter(Boolean),
+      fs: {
+        deny: ['.env', '.env.*', '*.{crt,pem}', '**/.git/**', '**/data/**'],
+      },
       proxy: {
+        '/api/donations': {
+          target: `http://127.0.0.1:${proxyPort}`,
+          changeOrigin: false,
+        },
+        '/api/donation-result': {
+          target: `http://127.0.0.1:${proxyPort}`,
+          changeOrigin: false,
+        },
         '/api/jira-media': {
           target: `http://127.0.0.1:${proxyPort}`,
           changeOrigin: false,

@@ -331,4 +331,23 @@ export const en: Translations = {
   'onboarding.demoLabel': 'Illustration with fictional example tasks',
   'profile.invalidEmail': 'Enter a valid email address',
   'profile.disconnect': 'Disconnect Jira and clear this session',
+
+  // === Voluntary one-time support ===
+  'donation.supportAuthor': 'Support the author',
+  'donation.title': 'Support Taskmap development',
+  'donation.description': 'A voluntary one-time payment. Support does not affect access to Taskmap features.',
+  'donation.oneTime': 'One-time payment',
+  'donation.chooseAmount': 'Choose a support amount',
+  'donation.select': 'Choose',
+  'donation.preparing': 'Preparing the payment page…',
+  'donation.proceedToPayment': 'Continue to payment',
+  'donation.opensNewTab': 'The payment page will open in a new tab.',
+  'donation.error': 'Unable to prepare the payment page. Please try again later.',
+  'donation.retry': 'Try again',
+  'donation.smallTitle': 'A thank you',
+  'donation.mediumTitle': 'Support development',
+  'donation.largeTitle': 'Extra support',
+  'donation.selected': 'Selected',
+  'donation.testMode': 'Test payment mode.',
+  'donation.notNow': 'Not now',
 };

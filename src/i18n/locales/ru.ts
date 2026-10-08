@@ -331,4 +331,23 @@ export const ru: Translations = {
   'onboarding.demoLabel': 'Иллюстрация с вымышленными задачами',
   'profile.invalidEmail': 'Введите корректный адрес электронной почты',
   'profile.disconnect': 'Отключить Jira и очистить эту сессию',
+
+  // === Voluntary one-time support ===
+  'donation.supportAuthor': 'Поддержать автора',
+  'donation.title': 'Поддержать развитие Taskmap',
+  'donation.description': 'Добровольный разовый платёж. Поддержка не влияет на доступ к возможностям Taskmap.',
+  'donation.oneTime': 'Разовый платёж',
+  'donation.chooseAmount': 'Выберите сумму поддержки',
+  'donation.select': 'Выбрать',
+  'donation.preparing': 'Подготавливаем страницу оплаты…',
+  'donation.proceedToPayment': 'Перейти к оплате',
+  'donation.opensNewTab': 'Страница оплаты откроется в новой вкладке.',
+  'donation.error': 'Не удалось подготовить страницу оплаты. Попробуйте ещё раз позже.',
+  'donation.retry': 'Попробовать ещё раз',
+  'donation.smallTitle': 'Спасибо',
+  'donation.mediumTitle': 'Поддержать разработку',
+  'donation.largeTitle': 'Большая поддержка',
+  'donation.selected': 'Выбрано',
+  'donation.testMode': 'Тестовый режим оплаты.',
+  'donation.notNow': 'Не сейчас',
 };

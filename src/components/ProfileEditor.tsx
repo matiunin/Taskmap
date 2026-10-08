@@ -3,6 +3,7 @@ import { JiraConfig } from '../types';
 import { useTranslation } from '../i18n';
 import { LanguageSelector } from './LanguageSelector';
 import { secureSessionStorage } from '../utils/secureStorage';
+import { SupportAuthor } from './SupportAuthor';
 import './ProfileEditor.css';
 
 interface ProfileEditorProps {
@@ -196,6 +197,7 @@ export const ProfileEditor: React.FC<ProfileEditorProps> = ({
                 </button>
               </div>
             </form>
+            <SupportAuthor placement="settings" />
           </div>
       </div>
     </div>

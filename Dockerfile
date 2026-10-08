@@ -13,10 +13,15 @@ RUN php -r 'exit(extension_loaded("curl") ? 0 : 1);' \
     && a2enmod headers rewrite reqtimeout
 COPY --from=build /app/dist/ /var/www/html/
 COPY server/php/proxy.php /opt/taskmap/proxy.php
+COPY server/php/donations.php /opt/taskmap/donations.php
 COPY deploy/api/ /var/www/html/api/
 COPY deploy/apache-taskmap.conf /etc/apache2/conf-available/taskmap.conf
 COPY deploy/php-taskmap.ini /usr/local/etc/php/conf.d/taskmap.ini
-RUN a2dissite 000-default && a2enconf taskmap
+RUN a2dissite 000-default && a2enconf taskmap \
+    && mkdir -p /var/lib/taskmap/donations \
+    && chown www-data:www-data /var/lib/taskmap/donations \
+    && chmod 700 /var/lib/taskmap/donations
+ENV TASKMAP_DONATION_DATA_DIR=/var/lib/taskmap/donations
 EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD php -r '$c=curl_init("http://127.0.0.1/api/health");curl_setopt($c,CURLOPT_RETURNTRANSFER,true);curl_setopt($c,CURLOPT_TIMEOUT,4);$b=curl_exec($c);exit(curl_getinfo($c,CURLINFO_HTTP_CODE)===200&&str_contains((string)$b,"\"OK\"")?0:1);'

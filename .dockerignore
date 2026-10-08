@@ -12,5 +12,6 @@
 !server/
 !server/php/
 !server/php/proxy.php
+!server/php/donations.php
 !deploy/
 !deploy/**
