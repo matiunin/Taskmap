@@ -8,6 +8,8 @@ import { JiraPreviewSidebar } from './components/JiraPreviewSidebar';
 import { DeleteConfirmDialog, useDeleteConfirm } from './components/DeleteConfirmDialog';
 import { LandingV2 } from './components/LandingV2';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { SupportAuthor } from './components/SupportAuthor';
+import type { JiraReadiness } from './utils/jiraReadiness';
 import { jiraApi } from './utils/jiraApi';
 import { secureSessionStorage } from './utils/secureStorage';
 import { JiraConfig } from './types';
@@ -22,6 +24,7 @@ function App() {
   const { t } = useTranslation();
   const [config, setConfig] = useState<JiraConfig | null>(null);
   const [configSaved, setConfigSaved] = useState(false);
+  const [jiraReadiness, setJiraReadiness] = useState<JiraReadiness>({ ready: false, pendingRequests: 0 });
   const [proxyStatus, setProxyStatus] = useState<'unknown' | 'checking' | 'running' | 'stopped'>('unknown');
   const [isProfileEditorOpen, setIsProfileEditorOpen] = useState(false);
   const [previewIssueKey, setPreviewIssueKey] = useState<string | null>(null);
@@ -58,6 +61,8 @@ function App() {
     tasks, canDeleteIssues, onSetCanDeleteIssues: setCanDeleteIssues,
     addNotification, onLoadTask: handleLoadTask,
   });
+
+  useEffect(() => jiraApi.subscribeReadiness(setJiraReadiness), []);
 
   const toggleDashboardCollapsed = useCallback(() => {
     setDashboardCollapsed(prev => {
@@ -282,6 +287,13 @@ function App() {
       {deleteConfirm?.show && (
         <DeleteConfirmDialog issueKey={deleteConfirm.issueKey} onConfirm={confirmDeleteIssue} onCancel={dismissDeleteConfirm} />
       )}
+      <SupportAuthor
+        placement="prompt"
+        ready={jiraReadiness.ready}
+        blocked={isProfileEditorOpen || !!deleteConfirm?.show || pendingChanges.length > 0
+          || applying || refreshCountdown > 0 || loadingKeys.length > 0
+          || Object.values(loading).some(Boolean) || jiraReadiness.pendingRequests > 0}
+      />
       </div>
     </ErrorBoundary>
   );

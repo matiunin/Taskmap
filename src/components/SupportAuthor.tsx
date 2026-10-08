@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { DONATIONS_URL } from '../config/runtime';
 import { useTranslation } from '../i18n';
+import { DONATION_SEEN_EVENT, DONATION_SEEN_KEY, getDonationPromptTracker } from '../utils/donationPrompt';
 import './SupportAuthor.css';
 
 type PresetId = 'small' | 'medium' | 'large';
@@ -16,7 +17,9 @@ interface DonationConfig {
 }
 
 interface SupportAuthorProps {
-  placement: 'footer' | 'settings';
+  placement: 'footer' | 'settings' | 'prompt';
+  ready?: boolean;
+  blocked?: boolean;
 }
 
 const PRESETS: DonationPreset[] = [
@@ -51,7 +54,13 @@ const readCheckoutUrl = (value: unknown): string | null => {
   }
 };
 
-export const SupportAuthor = ({ placement }: SupportAuthorProps) => {
+const hasOtherDialog = (own: HTMLDialogElement | null): boolean => (
+  Array.from(document.querySelectorAll<HTMLElement>(
+    'dialog[open], [role="dialog"], .action-link-dialog, .automation-modal-overlay, .advanced-search-panel',
+  )).some((element) => element !== own && !element.hidden && element.getClientRects().length > 0)
+);
+
+export const SupportAuthor = ({ placement, ready = false, blocked = false }: SupportAuthorProps) => {
   const { t, language } = useTranslation();
   const [config, setConfig] = useState<DonationConfig | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +68,9 @@ export const SupportAuthor = ({ placement }: SupportAuthorProps) => {
   const [pendingPreset, setPendingPreset] = useState<PresetId | null>(null);
   const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [hasError, setHasError] = useState(false);
+  const [promptRevision, setPromptRevision] = useState(0);
+  const [otherDialogOpen, setOtherDialogOpen] = useState(false);
+  const openingAutomatically = useRef(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const requestRef = useRef<AbortController | null>(null);
   const titleId = useId();
@@ -90,13 +102,72 @@ export const SupportAuthor = ({ placement }: SupportAuthorProps) => {
   useEffect(() => () => requestRef.current?.abort(), []);
 
   useEffect(() => {
+    if (placement !== 'prompt') return;
+    const update = () => setPromptRevision((value) => value + 1);
+    const storageChanged = (event: StorageEvent) => {
+      if (event.key === DONATION_SEEN_KEY || event.key === null) update();
+    };
+    const checkDialogs = () => setOtherDialogOpen(hasOtherDialog(dialogRef.current));
+    const observer = new MutationObserver(checkDialogs);
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['open', 'role', 'class', 'hidden'] });
+    checkDialogs();
+    window.addEventListener(DONATION_SEEN_EVENT, update);
+    window.addEventListener('storage', storageChanged);
+    document.addEventListener('visibilitychange', update);
+    document.addEventListener('keydown', update);
+    document.addEventListener('pointerdown', update);
+    document.addEventListener('focusin', update);
+    document.addEventListener('focusout', update);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener(DONATION_SEEN_EVENT, update);
+      window.removeEventListener('storage', storageChanged);
+      document.removeEventListener('visibilitychange', update);
+      document.removeEventListener('keydown', update);
+      document.removeEventListener('pointerdown', update);
+      document.removeEventListener('focusin', update);
+      document.removeEventListener('focusout', update);
+    };
+  }, [placement]);
+
+  useEffect(() => {
+    if (placement !== 'prompt' || !ready) return;
+    getDonationPromptTracker().recordQualifiedVisit();
+    if (!config || blocked || otherDialogOpen || isOpen || document.visibilityState !== 'visible'
+      || !getDonationPromptTracker().shouldPrompt()) return;
+    const timer = setTimeout(() => {
+      if (document.visibilityState !== 'visible' || hasOtherDialog(dialogRef.current)
+        || !getDonationPromptTracker().shouldPrompt()) return;
+      const active = document.activeElement;
+      if ((active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement) && active.value.trim()) return;
+      if (active instanceof HTMLElement && active.isContentEditable && active.textContent?.trim()) return;
+      openingAutomatically.current = true;
+      setIsOpen(true);
+    }, 15000);
+    return () => clearTimeout(timer);
+  }, [placement, ready, config, blocked, otherDialogOpen, isOpen, promptRevision]);
+
+  useEffect(() => {
     const dialog = dialogRef.current;
     if (!isOpen || !dialog) return;
+    if (openingAutomatically.current && (!ready || blocked || !getDonationPromptTracker().shouldPrompt()
+      || document.visibilityState !== 'visible' || hasOtherDialog(dialog))) {
+      setIsOpen(false);
+      return;
+    }
     const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    dialog.showModal();
+    try {
+      dialog.showModal();
+      if (!dialog.open) { setIsOpen(false); return; }
+      getDonationPromptTracker().markShown();
+      window.dispatchEvent(new Event(DONATION_SEEN_EVENT));
+      document.body.style.overflow = 'hidden';
+    } catch {
+      setIsOpen(false);
+      return;
+    }
     return () => {
-      dialog.close();
+      if (dialog.open) dialog.close();
       document.body.style.overflow = previousOverflow;
     };
   }, [isOpen]);
@@ -151,9 +222,12 @@ export const SupportAuthor = ({ placement }: SupportAuthorProps) => {
 
   return (
     <div className={`support-author support-author--${placement}`}>
-      <button type="button" className="support-author__trigger" onClick={() => setIsOpen(true)}>
+      {placement !== 'prompt' && <button type="button" className="support-author__trigger" onClick={() => {
+        openingAutomatically.current = false;
+        setIsOpen(true);
+      }}>
         {t('donation.supportAuthor')}
-      </button>
+      </button>}
       <dialog
         ref={dialogRef}
         className="donation-dialog"

@@ -53,6 +53,26 @@ rights. The feature is disabled unless its server runtime configuration is
 complete; merchant passwords are never exposed through frontend config or
 build arguments.
 
+The optional automatic prompt starts on the third qualified tab session.
+`JiraApiClient` observes existing successful REST API v3 reads (GET or POST
+`/search/jql` with JQL data), without making another Jira request. Observer
+callbacks receive only readiness and the active request count; exceptions
+are isolated. Config identity and a revision exclude stale responses after
+disconnect or a settings change. A failed Jira request suspends eligibility
+until another successful read.
+
+`sessionStorage.taskmapDonationVisitCounted` records one qualified visit per
+tab session, surviving reload, reconnect and React StrictMode. Local storage
+contains only `taskmapDonationQualifiedVisits` (0–3) and
+`taskmapDonationPromptSeen` (`true` after an actual manual or automatic
+`showModal`). The global prompt waits 15 seconds of visible, quiet app state,
+deferring around loading, settings, pending edits and other dialogs. Keyboard,
+pointer and focus activity restart the delay. Manual buttons remain available;
+storage errors quietly disable automatic prompting only. A storage event
+suppresses further prompts in other tabs; simultaneous-tab counting is best
+effort and may delay the third-visit offer. No Jira identity, timestamp or
+usage history is stored for this rule.
+
 Same-origin `GET /api/donations` (Node) or `/api/donations.php` (PHP) reports
 availability and public presets. `POST` accepts only `{ preset, locale }`,
 allocates an invoice and returns `{ url, invId }`. The server selects the

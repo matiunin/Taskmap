@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { JIRA_PROXY_URL, IS_DEV } from '../../config/runtime';
 import type { JiraConfig, JiraIssue, JiraIssueLink, ConfluenceMention, AutomationInputValue } from '../../types';
+import { JiraReadinessObserver, isJiraReadRequest } from '../jiraReadiness';
+import type { JiraReadiness } from '../jiraReadiness';
 
 export interface JiraIssueLinkType {
   id: string;
@@ -13,17 +15,24 @@ export class JiraApiClient {
   config: JiraConfig | null = null;
   epicLinkFieldIdCache: string | null | undefined = undefined;
   cloudId: string | null = null;
+  private readiness = new JiraReadinessObserver<JiraConfig>();
+
+  subscribeReadiness(listener: (state: JiraReadiness) => void): () => void {
+    return this.readiness.subscribe(listener);
+  }
 
   setConfig(config: JiraConfig) {
     this.config = config;
     this.epicLinkFieldIdCache = undefined;
     this.cloudId = null;
+    this.readiness.setConfig(config);
   }
 
   clearConfig() {
     this.config = null;
     this.epicLinkFieldIdCache = undefined;
     this.cloudId = null;
+    this.readiness.setConfig(null);
   }
 
   async request<T>(endpoint: string, options: any = {}): Promise<T> {
@@ -54,7 +63,10 @@ export class JiraApiClient {
     const maxRetries = 3;
     const REQUEST_TIMEOUT_MS = 30000; // 30 second timeout
     let lastError: any = null;
+    const ticket = this.readiness.begin(config);
+    let succeeded = false;
 
+    try {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       let abortController: AbortController | null = null;
       let timeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -83,6 +95,9 @@ export class JiraApiClient {
         });
 
         if (timeoutId) clearTimeout(timeoutId);
+        succeeded = true;
+        this.readiness.success(ticket, response.data !== null && typeof response.data === 'object'
+          && isJiraReadRequest(url, config.baseUrl, options.method || 'GET', options.data));
         return response.data;
       } catch (error: any) {
         if (timeoutId) clearTimeout(timeoutId);
@@ -140,6 +155,9 @@ export class JiraApiClient {
     }
 
     throw lastError;
+    } finally {
+      this.readiness.finish(ticket, !succeeded);
+    }
   }
 
   async testConnection(): Promise<boolean> {
