@@ -36,6 +36,22 @@ exact external origin, for example `https://taskmap.example.com`.
 Host the app at the root of a dedicated domain. Protect access at the
 reverse proxy when it is intended for a private team.
 
+## Connect to Jira
+
+1. Sign in to the Atlassian account that can access your Jira projects.
+2. Open [the account's API token settings](https://id.atlassian.com/manage-profile/security/api-tokens).
+3. Choose **Create API token**, the standard token without scopes. Set a
+   name and expiry date, create the token and copy its value.
+4. Enter your Jira Cloud URL, the same account's email and the token in
+   Taskmap. Load an issue that the account can access to check the connection.
+
+Jira determines the account's view and edit permissions. Enter the token in
+the app; keep it out of `.env`, source files and published examples.
+
+This version calls the API through your Jira Cloud site URL. Tokens
+**with scopes**, which require `api.atlassian.com/ex/jira/...`, are not
+supported here. See [Atlassian's token guide](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account).
+
 ## Development
 
 Use **Node.js 24** (`.nvmrc`). PHP 8.4+ with cURL is needed to run the full
@@ -51,6 +67,11 @@ npm run dev:with-proxy
 Open **http://127.0.0.1:3000**. The development proxy binds to
 `127.0.0.1:3004`. `npm run build` creates `dist/`; `npm run preview`
 previews static files and does not run the PHP backend.
+
+`VITE_JIRA_PROXY_URL` can set an optional same-origin API path for a local
+`npm run build`. Docker uses the standard same-origin API routes; its builder
+does not receive this override from `.env`. Changing a local `VITE_*` value
+requires a new npm build. Never put credentials in these public build values.
 
 ```sh
 npm run check
@@ -69,6 +90,16 @@ Robokassa support offers **490, 2,490 or 3,990 RUB**, with no subscription,
 recurring charge or access restriction. A cancelled or unpaid donation never
 blocks the application. The feature is off by default and hidden when its
 server configuration is incomplete.
+
+The automatic offer starts on the third qualified visit: a separate tab or
+new tab session in which Jira successfully returns data. Reload, reconnect
+and saving settings do not add visits. The prompt waits about 15 seconds of
+quiet use in a visible tab and defers during loading, settings, other dialogs
+or unapplied edits. It does not open before connection or while Jira requests
+are failing. Manual support buttons remain available in the footer and
+settings. After the first actual opening, including a manual opening, there
+are no further automatic offers. Only a counter capped at three and shown
+flags are stored in the browser; unavailable storage disables auto prompting.
 
 Use a **separate donation shop under your Robokassa account**, leaving any
 shop that handles other payments/access rights unchanged. Set its callbacks
@@ -111,9 +142,11 @@ that volume while payments are pending. No MySQL or user database is needed.
 
 Credentials live in the tab's `sessionStorage`; encoding is not encryption.
 Your server forwards them to your allowlisted Jira over HTTPS and does not
-store them. Cached issue data may remain in browser storage until you use
-Disconnect. Never put credentials in a `VITE_*` variable: these values are
-embedded in the browser build.
+store them. Disconnect removes connection credentials, the loaded issue
+cache, task history and saved task colors. UI language and preferences,
+the donation visit counter and the prompt's shown flag remain. Never put
+credentials in a `VITE_*` variable: these values are embedded in the browser
+build.
 
 Keep `.env` and reverse proxy configuration outside version control.
 When donations are enabled, back up and retain the `donations` named volume

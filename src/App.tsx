@@ -127,6 +127,8 @@ function App() {
   const handleDisconnect = () => {
     secureSessionStorage.removeItem('jiraConfig');
     localStorage.removeItem('jiraConfig');
+    localStorage.removeItem('jiraTaskHistory');
+    localStorage.removeItem('jiraTaskColors');
     clearTasks();
     setPendingChanges([]);
     setPreviewIssueKey(null);

@@ -20,6 +20,7 @@ export function useTaskManagement(
   const [loadingKeys, setLoadingKeys] = useState<string[]>([]);
   const [highlightedTaskId, setHighlightedTaskId] = useState<string | null>(null);
   const highlightTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const loadGeneration = useRef(0);
 
   const taskIdCounter = useRef<number>(0);
   const taskIdInitialized = useRef(false);
@@ -42,6 +43,10 @@ export function useTaskManagement(
   };
 
   const handleLoadTask = useCallback(async (urlOrKey: string, taskId?: string) => {
+    const generation = loadGeneration.current;
+    const config = jiraApi.config;
+    const isCurrent = () => config !== null && config === jiraApi.config && generation === loadGeneration.current;
+    if (!isCurrent()) return;
     const issueKey = parseJiraUrl(urlOrKey);
     if (!issueKey) {
       addNotification('error', t('notification.taskNotRecognized'));
@@ -71,13 +76,16 @@ export function useTaskManagement(
     }
     try {
       const issue = await jiraApi.getIssue(issueKey);
+      if (!isCurrent()) return;
       const { links: issueLinks, confluenceMentions: mentions } = await jiraApi.getAllRelatedIssues(issueKey);
+      if (!isCurrent()) return;
 
       const newTaskData: TaskData = {
         id: targetTaskId!, rootIssue: issue, links: issueLinks, confluenceMentions: mentions,
       };
 
       setTasks(prev => {
+        if (!isCurrent()) return prev;
         const existingIndex = prev.findIndex(t => t.id === targetTaskId);
         let updated;
         if (existingIndex >= 0) {
@@ -92,11 +100,13 @@ export function useTaskManagement(
 
       addToHistory(issueKey, issue.summary);
     } catch (err: any) {
-      addNotification('error', err.message || t('notification.loadError'));
+      if (isCurrent()) addNotification('error', err.message || t('notification.loadError'));
     } finally {
-      setLoading(prev => ({ ...prev, [targetTaskId!]: false }));
-      // Убираем ключ из списка загружаемых
-      setLoadingKeys(prev => prev.filter(k => k !== issueKey.toUpperCase()));
+      if (isCurrent()) {
+        setLoading(prev => isCurrent() ? ({ ...prev, [targetTaskId!]: false }) : prev);
+        // Убираем ключ из списка загружаемых
+        setLoadingKeys(prev => isCurrent() ? prev.filter(k => k !== issueKey.toUpperCase()) : prev);
+      }
     }
   }, [tasks, addNotification, t]);
 
@@ -113,8 +123,13 @@ export function useTaskManagement(
   }, [tasks, handleLoadTask]);
 
   const handleLoadParentChain = useCallback(async (issueKey: string) => {
+    const generation = loadGeneration.current;
+    const config = jiraApi.config;
+    const isCurrent = () => config !== null && config === jiraApi.config && generation === loadGeneration.current;
+    if (!isCurrent()) return;
     try {
       const chain = await jiraApi.getParentChain(issueKey);
+      if (!isCurrent()) return;
       if (chain.length === 0) {
         addNotification('info', t('notification.noParent', { key: issueKey }));
         return;
@@ -122,13 +137,19 @@ export function useTaskManagement(
       for (const parentKey of chain) handleLoadTask(parentKey);
       addNotification('success', t('notification.parentChainLoaded', { count: chain.length }));
     } catch (err: any) {
-      addNotification('error', err.message || t('notification.loadError'));
+      if (isCurrent()) addNotification('error', err.message || t('notification.loadError'));
     }
   }, [addNotification, t, handleLoadTask]);
 
   const clearTasks = useCallback(() => {
+    loadGeneration.current++;
+    if (highlightTimerRef.current) clearTimeout(highlightTimerRef.current);
+    highlightTimerRef.current = null;
     localStorage.removeItem('jiraTasks');
     setTasks([]);
+    setLoading({});
+    setLoadingKeys([]);
+    setHighlightedTaskId(null);
   }, []);
 
   return {
