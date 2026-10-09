@@ -6,7 +6,7 @@ issue preview, local undo, and queued link changes applied to Jira.
 This edition uses your own Jira and server. All features are available
 without a subscription or payment. Optional one-off support uses Robokassa;
 there is no operator, feedback-bot, or user-database integration.
-[Full Russian setup guide](README.md) · [MIT license](LICENSE) ·
+[Full setup guide](README.md) · [MIT license](LICENSE) ·
 [Security](SECURITY.md) · [Third-party notices](THIRD_PARTY_NOTICES.md)
 
 ## Docker quick start

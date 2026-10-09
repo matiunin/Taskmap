@@ -43,4 +43,4 @@ third-party resources are listed in
 [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
 
 For installation, Jira connection and donation setup instructions, see
-the [English setup guide](../README.en.md).
+the [English setup guide](../README.md).
