@@ -1,45 +1,46 @@
-# Taskmap — карта связей задач Jira
+# Taskmap — a map of Jira issue relationships
 
-Taskmap — открытое приложение для работы со связями задач Jira Cloud.
-Оно показывает задачи в виде интерактивной карты, помогает просматривать
-их описание и готовить изменения связей перед применением в Jira.
+Taskmap is an open-source application for working with Jira Cloud issue
+relationships. It displays issues on an interactive map, lets you view
+their descriptions and prepare link changes before applying them to Jira.
 
-## Что удобно
+## Benefits
 
-- **Общая картина.** Родительские, дочерние и связанные задачи видны на
-  одной карте.
-- **Проверка изменений.** Можно подготовить изменения связей, отменить
-  локальные правки и проверить их перед применением в Jira.
-- **Своё размещение.** Приложение и прокси развёртываются на вашем сервере
-  и работают с вашим Jira. Подписка на Taskmap не требуется.
+- **The full picture.** Parent, child and linked issues appear on one map.
+- **Review before applying.** Prepare link changes, undo local edits and
+  review them before applying them to Jira.
+- **Your own deployment.** Deploy the app and proxy on your server and
+  connect them to your Jira. No Taskmap subscription is required.
 
-## Как проходит работа
+## Workflow
 
-1. Разверните Taskmap и укажите разрешённый домен Jira.
-2. Подключите Jira Cloud: введите его адрес, почту аккаунта и API-токен.
-3. Добавьте задачу по ключу или ссылке и изучите её связи и описание.
-4. Подготовьте правки на карте, проверьте их и примените в Jira.
+1. Deploy Taskmap and configure the allowed Jira hostname.
+2. Connect Jira Cloud: enter its URL, your account email and an API token.
+3. Add an issue by key or URL and explore its relationships and description.
+4. Prepare changes on the map, review them and apply them to Jira.
 
-Права на просмотр и изменение задач определяет Jira. Taskmap не заменяет
-её систему прав и хранение задач.
+Jira controls permissions for viewing and editing issues and remains
+the source of persistent issue data.
 
-## Самостоятельное размещение и данные
+## Self-hosting and data
 
-Для установки предусмотрен Docker Compose, для локальной разработки —
-Node.js с прокси. Данные подключения передаются вашему прокси для
-API-запросов к Jira и не передаются при создании донатов. Они хранятся
-в сессии вкладки браузера; используемая кодировка не является шифрованием.
-Действие «Отключиться» очищает данные подключения, кэш задач, историю
-задач и сохранённые цвета задач.
+Use Docker Compose for deployment and Node.js with the proxy for local
+development. Your connection credentials are sent to your proxy for Jira
+API requests and are not sent when creating donations. They are kept in
+the browser tab's `sessionStorage`; encoding is not encryption.
+Disconnect clears connection credentials, cached issues, local task history
+and saved task colors.
 
-## Добровольная поддержка
+## Optional support
 
-При настройке Robokassa можно включить разовые донаты на 490, 2 490 или
-3 990 ₽. Они выключены по умолчанию. Отказ от поддержки и неоплата
-не ограничивают возможности приложения и не создают подписку.
+With Robokassa configured, you can enable one-off donations of 490, 2,490
+or 3,990 RUB. Donations are disabled by default. Choosing not to donate
+or leaving a donation unpaid does not restrict the app's features or
+create a subscription.
 
-Проект распространяется по [лицензии MIT](../LICENSE). Условия сторонних
-ресурсов указаны в [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
+The project is distributed under the [MIT license](../LICENSE). Terms for
+third-party resources are listed in
+[THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
 
-Инструкция по установке, подключению Jira и настройке донатов —
-в [README.md](../README.md).
+For installation, Jira connection and donation setup instructions, see
+the [English setup guide](../README.en.md).
