@@ -15,7 +15,15 @@ Taskmap показывает задачи Jira и их связи в виде и
 ## Быстрый запуск через Docker
 
 Нужны Docker Engine с Compose либо Docker Desktop и доступ к Jira Cloud.
-Клонируйте репозиторий или распакуйте архив, затем откройте папку проекта.
+Получите исходники:
+
+```sh
+git clone https://github.com/matiunin/Taskmap.git
+cd Taskmap
+```
+
+Можно также скачать и распаковать архив с GitHub, затем открыть папку проекта.
+Создайте локальный файл настроек:
 
 ```sh
 cp .env.example .env

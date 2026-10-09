@@ -11,7 +11,15 @@ there is no operator, feedback-bot, or user-database integration.
 
 ## Docker quick start
 
-Clone the repository or extract the source archive, then run:
+Get the source:
+
+```sh
+git clone https://github.com/matiunin/Taskmap.git
+cd Taskmap
+```
+
+Alternatively, download and extract the GitHub source archive, then open its
+project directory. Create your local configuration:
 
 ```sh
 cp .env.example .env
